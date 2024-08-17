@@ -35,7 +35,6 @@ const QuestionCardAdmin = ({ question, onUpdate, onDelete }) => {
   const [answer, setAnswer] = useState(question.answer || "");
   const [showAnswer, setShowAnswer] = useState(!!question.answer);
   const role = sessionStorage.getItem("role");
-
   const handleUpdate = () => {
     onUpdate(question.id, { ...question, answer });
     setShowAnswer(true);
@@ -83,7 +82,7 @@ const QuestionCardAdmin = ({ question, onUpdate, onDelete }) => {
             </Typography>
           )}
 
-          {/* Nếu là admin, hiển thị ô nhập câu trả lời và các nút chức năng */}
+          {/* Nếu là admin, hiển thị ô nhập câu trả lời và các nút delete */}
           {role === "admin" && (
             <Box>
               <TextField

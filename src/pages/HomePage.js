@@ -7,7 +7,7 @@ import { Button, Box } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-const HomePageAdmin = () => {
+const HomePage = () => {
   const [questions, setQuestions] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -56,10 +56,34 @@ const HomePageAdmin = () => {
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
+  const checkLogin = () => {
+    if (role === "admin") {
+      return questions.map((q) => (
+        <QuestionCardAdmin
+          key={q.id}
+          question={q}
+          onUpdate={handleUpdateQuestion}
+          onDelete={handleDeleteQuestion}
+        />
+      ));
+    }
 
+    if (role === "user") {
+      return questions.map((q) => (
+        <QuestionCard
+          key={q.id}
+          question={q}
+          handleUpdateQuestion={handleUpdateQuestion}
+          handleDeleteQuestion={handleDeleteQuestion}
+        />
+      ));
+    }
+
+    return questions.map((q) => <QuestionCard key={q.id} question={q} />);
+  };
   return (
     <div style={{ padding: "20px" }}>
-      {role !== "admin" && (
+      {role === "user" && (
         <Box display="flex" justifyContent="center" marginBottom="20px">
           <Button
             variant="contained"
@@ -90,17 +114,7 @@ const HomePageAdmin = () => {
           justifyContent: "space-around",
         }}
       >
-        {role === "admin" &&
-          questions.map((q) => (
-            <QuestionCardAdmin
-              key={q.id}
-              question={q}
-              onUpdate={handleUpdateQuestion}
-              onDelete={handleDeleteQuestion}
-            />
-          ))}
-        {role === "user" &&
-          questions.map((q) => <QuestionCard key={q.id} question={q} />)}
+        {checkLogin()}
       </div>
 
       <QuestionForm
@@ -113,4 +127,4 @@ const HomePageAdmin = () => {
   );
 };
 
-export default HomePageAdmin;
+export default HomePage;

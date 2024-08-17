@@ -63,7 +63,7 @@ function Menu() {
                 <ul class="dropdown-menu">
                   <li>{Email}</li>
                   <li>
-                    <Link class="btn" to={""}>
+                    <Link class="btn" to={"/userProfile"}>
                       Profile
                     </Link>
                   </li>

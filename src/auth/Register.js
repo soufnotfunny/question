@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import { Container, TextField, Button, Typography } from '@mui/material'
+import { Container, TextField, Typography } from '@mui/material'
 import { auth, firestore } from '../firebase-config'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import { doc, setDoc } from 'firebase/firestore'
 import { getCustomErrorMessage } from './CustomErrorMessages'
 import './Register.css'
 import { Link } from 'react-router-dom'
+
 const Register = () => {
+  const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -30,9 +32,15 @@ const Register = () => {
         password
       )
       const user = userCredential.user
+
+      await updateProfile(user, {
+        displayName: displayName,
+      })
+
       await setDoc(doc(firestore, 'users', user.uid), {
         email: user.email,
-        role: 'user'
+        displayName: displayName,
+        role: 'user',
       })
 
       navigate('/')
@@ -56,6 +64,14 @@ const Register = () => {
           Sign Up
         </Typography>
         <form onSubmit={handleSignup} className='register-form'>
+          <TextField
+            label='Display Name'
+            variant='outlined'
+            fullWidth
+            margin='normal'
+            value={displayName}
+            onChange={e => setDisplayName(e.target.value)}
+          />
           <TextField
             label='Email'
             variant='outlined'
