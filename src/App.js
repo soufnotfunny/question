@@ -6,7 +6,6 @@ import Footer from "./components/footer";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 
-import HomePageAdmin from "./pages/admin/HomePageAdmin";
 function App() {
   return (
     <>
@@ -15,7 +14,6 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/" element={<HomePage />}></Route>
-        <Route path="/try" element={<HomePageAdmin />}></Route>
       </Routes>
       <Footer />
     </>

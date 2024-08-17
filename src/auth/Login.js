@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, TextField, Button, Typography } from "@mui/material";
+import { Container, TextField, Typography } from "@mui/material";
 import { auth } from "../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -25,13 +25,15 @@ const Login = () => {
         alert("Welcome Admin");
         sessionStorage.setItem("role", "admin");
         sessionStorage.setItem("Email", email);
-        navigate("/try");
+        console.log(sessionStorage);
+        navigate("/");
       } else {
         await signInWithEmailAndPassword(auth, email, password);
         alert("Welcome User");
         sessionStorage.setItem("role", "user");
         sessionStorage.setItem("Email", email);
-        navigate("/try");
+        console.log(sessionStorage);
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
